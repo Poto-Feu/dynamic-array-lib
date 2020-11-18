@@ -21,6 +21,8 @@ DynamicArray *DynamicArray_init(size_t type_size)
 {
     DynamicArray *new_DA = malloc(sizeof(DynamicArray));
 
+    if(!new_DA) return NULL;
+
     new_DA->type_size = type_size;
     new_DA->elements_n = 0;
     new_DA->element_capacity = 0;
@@ -34,10 +36,16 @@ DynamicArray *DynamicArray_init_and_reserve(size_t type_size, size_t element_num
 {
     DynamicArray *new_DA = malloc(sizeof(DynamicArray));
 
+    if(!new_DA) return NULL;
+
     new_DA->type_size = type_size;
     new_DA->elements_n = 0;
     new_DA->element_capacity = element_number;
     new_DA->content = malloc(new_DA->type_size * element_number);
+    if(!new_DA->content) {
+        free(new_DA);
+        return NULL;
+    }
     new_DA->is_alloc = true;
 
     return new_DA;
@@ -45,13 +53,15 @@ DynamicArray *DynamicArray_init_and_reserve(size_t type_size, size_t element_num
 
 void DynamicArray_free(DynamicArray **DA)
 {
-    if((*DA)->is_alloc) free((*DA)->content);
+    if(!DA) return;
+    else if((*DA)->is_alloc) free((*DA)->content);
     free(*DA);
 }
 
 int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
 {
-    if(DA->element_capacity > element_number) return 0;
+    if(!DA) return -1;
+    else if(DA->element_capacity > element_number) return 0;
     else {
         void *temp_ptr = realloc(DA->content, element_number * DA->type_size);
 
@@ -69,7 +79,8 @@ int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
 
 int DynamicArray_shrink(DynamicArray *DA, size_t element_number)
 {
-    if(element_number >= DA->element_capacity) {
+    if(!DA) return -1;
+    else if(element_number >= DA->element_capacity) {
         free(DA->content);
         DA->elements_n = 0;
         DA->content = NULL;
