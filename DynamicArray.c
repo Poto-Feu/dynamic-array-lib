@@ -67,10 +67,8 @@ int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
 
         if(!temp_ptr) return -1;
         else {
-            if(!DA->is_alloc) {
-                DA->content = temp_ptr;
-                DA->is_alloc = true;
-            }
+            DA->content = temp_ptr;
+            DA->is_alloc = true;
             DA->element_capacity = element_number;
             return 0;
         }
