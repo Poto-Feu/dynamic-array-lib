@@ -147,3 +147,15 @@ int DynamicArray_add_element(DynamicArray *DA, void *element)
 
     return 0;
 }
+
+int DynamicArray_remove_element(DynamicArray *DA, size_t pos)
+{
+	char *content = DA->content;
+
+	if(pos >= DA->elements_n) return -1;
+	memmove(content + pos * DA->type_size, content + (pos + 1) * DA->type_size,
+			DA->type_size * (DA->elements_n - pos - 1));
+	--DA->elements_n;
+
+	return 0;
+}

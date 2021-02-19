@@ -55,4 +55,8 @@ void *DynamicArray_get_element(DynamicArray *DA, size_t index);
 performance issues if often called without care - don't forget to use reserve.*/
 int DynamicArray_add_element(DynamicArray *DA, void *element);
 
+/*Delete the element in the specified index (if it exists) and move the elements following it to
+fill the gap. Return NULL if out of bounds*/
+int DynamicArray_remove_element(DynamicArray *DA, size_t pos);
+
 #endif
