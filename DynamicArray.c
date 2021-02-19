@@ -105,10 +105,12 @@ int DynamicArray_shrink(DynamicArray *DA, size_t element_number)
 
         return 0;
     } else {
-        void *temp_ptr = realloc(DA->content, DA->type_size * (DA->elements_n - element_number));
+        void *temp_ptr = realloc(DA->content,
+				DA->type_size * (DA->element_capacity - element_number));
 
         if(!temp_ptr) return -1;
         else {
+			DA->content = temp_ptr;
             DA->element_capacity -= element_number;
             if(DA->elements_n > DA->element_capacity) DA->elements_n = DA->element_capacity;
             return 0;
