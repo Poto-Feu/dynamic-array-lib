@@ -35,8 +35,8 @@ DynamicArray *DynamicArray_init_and_reserve(size_t type_size, size_t el_number);
 /*Necessary to avoid memory leaks.*/
 void DynamicArray_free(DynamicArray **DA);
 
-/*This function (re)allocates memory for slots according to the element_number parameter - it will
-do nothing if the element_number parameter is inferior to the current number of slots present in the
+/*This function (re)allocates memory for slots according to the element_number parameter. It will do
+nothing if the element_number parameter is inferior to the current number of slots present in the
 DynamicArray - use shrink instead.*/
 int DynamicArray_reserve(DynamicArray *DA, size_t element_number);
 
