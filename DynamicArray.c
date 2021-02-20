@@ -25,7 +25,6 @@
 
 #define DEFAULT_SIZE 15
 
-typedef size_t size_t;
 
 struct DynamicArray
 {
