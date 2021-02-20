@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2020 Adrien Saad
+    Copyright (C) 2021 Adrien Saad
 
     This file is part of DynamicArrayLib.
 
