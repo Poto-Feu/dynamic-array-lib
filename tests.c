@@ -25,33 +25,33 @@
 
 int main()
 {
-	struct DummyStruct {
-		int a;
-		float b;
-	};
+    struct DummyStruct {
+        int a;
+        float b;
+    };
 
-	struct DummyStruct dummy_1 = { .b = 1 };
-	struct DummyStruct dummy_2 = { .b = 2 };
-	struct DummyStruct dummy_3 = { .b = 3 };
+    struct DummyStruct dummy_1 = { .b = 1 };
+    struct DummyStruct dummy_2 = { .b = 2 };
+    struct DummyStruct dummy_3 = { .b = 3 };
 
-	struct DummyStruct *dummy_ptr = NULL;
-	DynamicArray *da = DynamicArray_init_and_reserve(sizeof(struct DummyStruct), 25);
+    struct DummyStruct *dummy_ptr = NULL;
+    DynamicArray *da = DynamicArray_init_and_reserve(sizeof(struct DummyStruct), 25);
 
-	if(!da) return EXIT_FAILURE;
+    if(!da) return EXIT_FAILURE;
 
-	assert(DynamicArray_shrink(da, 4) == 0);
-	assert(DynamicArray_reserve(da, 50) == 0);
-	assert(DynamicArray_get_capacity(da) == 50);
+    assert(DynamicArray_shrink(da, 4) == 0);
+    assert(DynamicArray_reserve(da, 50) == 0);
+    assert(DynamicArray_get_capacity(da) == 50);
 
-	DynamicArray_add_element(da, &dummy_1);
-	DynamicArray_add_element(da, &dummy_2);
-	DynamicArray_add_element(da, &dummy_3);
+    DynamicArray_add_element(da, &dummy_1);
+    DynamicArray_add_element(da, &dummy_2);
+    DynamicArray_add_element(da, &dummy_3);
 
-	assert(DynamicArray_remove_element(da, 1) == 0);
-	dummy_ptr = DynamicArray_get_element(da, 1);
-	assert(dummy_ptr->b == 3);
+    assert(DynamicArray_remove_element(da, 1) == 0);
+    dummy_ptr = DynamicArray_get_element(da, 1);
+    assert(dummy_ptr->b == 3);
 
-	DynamicArray_free(&da);
+    DynamicArray_free(&da);
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
