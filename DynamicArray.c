@@ -123,12 +123,12 @@ int DynamicArray_shrink(DynamicArray *DA, size_t element_number)
     }
 }
 
-size_t DynamicArray_get_size(DynamicArray *DA)
+size_t DynamicArray_get_size(const DynamicArray *DA)
 {
     return DA->elements_n;
 }
 
-size_t DynamicArray_get_capacity(DynamicArray *DA)
+size_t DynamicArray_get_capacity(const DynamicArray *DA)
 {
     return DA->element_capacity;
 }
@@ -145,7 +145,7 @@ void *DynamicArray_get_element(DynamicArray *DA, size_t index)
     }
 }
 
-int DynamicArray_add_element(DynamicArray *DA, void *element)
+int DynamicArray_add_element(DynamicArray *DA, const void *element)
 {
     return_if_DA_NULL(DA, -1);
     if(DA->elements_n + 1 > DA->element_capacity) {

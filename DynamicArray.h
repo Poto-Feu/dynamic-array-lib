@@ -45,15 +45,15 @@ the specified value is superior to the element capacity of the DynamicArray, the
 int DynamicArray_shrink(DynamicArray *DA, size_t element_number);
 
 /*Return the number of currently stored elements.*/
-size_t DynamicArray_get_size(DynamicArray *DA);
+size_t DynamicArray_get_size(const DynamicArray *DA);
 /*Return the number of elements slots available.*/
-size_t DynamicArray_get_capacity(DynamicArray *DA);
+size_t DynamicArray_get_capacity(const DynamicArray *DA);
 /*Return NULL if the index is out of bounds.*/
 void *DynamicArray_get_element(DynamicArray *DA, size_t index);
 
 /*If there is not enough available slots, more memory will be allocated - this will cause
 performance issues if often called without care - don't forget to use reserve.*/
-int DynamicArray_add_element(DynamicArray *DA, void *element);
+int DynamicArray_add_element(DynamicArray *DA, const void *element);
 
 /*Delete the element in the specified index (if it exists) and move the elements following it to
 fill the gap. Return NULL if out of bounds*/
