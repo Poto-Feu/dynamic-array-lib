@@ -163,9 +163,12 @@ int DynamicArray_remove_element(DynamicArray *DA, size_t pos)
 
     return_if_DA_NULL(DA, -1);
     if(pos >= DA->elements_n) return -1;
-    memmove(content + pos * DA->type_size, content + (pos + 1) * DA->type_size,
+    else if(DA->elements_n == 1) DA->elements_n = 0;
+    else {
+        memmove(content + pos * DA->type_size, content + (pos + 1) * DA->type_size,
             DA->type_size * (DA->elements_n - pos - 1));
-    --DA->elements_n;
+        --DA->elements_n;
+    }
 
     return 0;
 }
