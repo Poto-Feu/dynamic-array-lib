@@ -105,6 +105,7 @@ int DynamicArray_shrink(DynamicArray *DA, size_t element_number)
     if(element_number >= DA->element_capacity) {
         free(DA->content);
         DA->elements_n = 0;
+        DA->element_capacity = 0;
         DA->content = NULL;
         DA->is_alloc = false;
 
