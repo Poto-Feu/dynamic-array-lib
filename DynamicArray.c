@@ -164,6 +164,22 @@ int DynamicArray_add_element(DynamicArray *DA, const void *element)
     return 0;
 }
 
+int DynamicArray_add_multiple_elements(DynamicArray *DA, const void *elements,
+        size_t element_number)
+{
+    return_if_DA_NULL(DA, -1);
+    if(DA->elements_n + element_number > DA->element_capacity) {
+        if(DynamicArray_reserve(DA, DA->elements_n + element_number) != 0) {
+            return -1;
+        }
+    }
+    memcpy((char *)DA->content + (DA->elements_n * DA->type_size), elements,
+            DA->type_size * element_number);
+    DA->elements_n += element_number;
+
+    return 0;
+}
+
 int DynamicArray_remove_element(DynamicArray *DA, size_t pos)
 {
     char *content = DA->content;

@@ -54,6 +54,8 @@ void *DynamicArray_get_element(DynamicArray *DA, size_t index);
 /*If there is not enough available slots, more memory will be allocated - this will cause
 performance issues if often called without care - don't forget to use reserve.*/
 int DynamicArray_add_element(DynamicArray *DA, const void *element);
+int DynamicArray_add_multiple_elements(DynamicArray *DA, const void *elements,
+		size_t element_number);
 
 /*Delete the element in the specified index (if it exists) and move the elements following it to
 fill the gap. Return NULL if out of bounds*/
