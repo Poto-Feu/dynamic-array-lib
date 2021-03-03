@@ -35,7 +35,7 @@ struct DynamicArray
 {
     size_t type_size;
     size_t elements_n; //Number of currently stored elements
-    size_t element_capacity; //Number of elements that can be stored
+    size_t elements_capacity; //Number of elements that can be stored
     void *content;
     bool is_alloc;
 };
@@ -48,7 +48,7 @@ DynamicArray *DynamicArray_init(size_t type_size)
 
     new_DA->type_size = type_size;
     new_DA->elements_n = 0;
-    new_DA->element_capacity = 0;
+    new_DA->elements_capacity = 0;
     new_DA->content = NULL;
     new_DA->is_alloc = false;
 
@@ -63,7 +63,7 @@ DynamicArray *DynamicArray_init_and_reserve(size_t type_size, size_t element_num
 
     new_DA->type_size = type_size;
     new_DA->elements_n = 0;
-    new_DA->element_capacity = element_number;
+    new_DA->elements_capacity = element_number;
     new_DA->content = malloc(new_DA->type_size * element_number);
     if(!new_DA->content) {
         free(new_DA);
@@ -89,9 +89,9 @@ int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
         if(!DA->content) return -1;
 
         DA->is_alloc = true;
-        DA->element_capacity = element_number;
+        DA->elements_capacity = element_number;
         return 0;
-    } else if(DA->element_capacity > element_number) return 0;
+    } else if(DA->elements_capacity > element_number) return 0;
     else {
         void *temp_ptr = realloc(DA->content, element_number * DA->type_size);
 
@@ -99,7 +99,7 @@ int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
         else {
             DA->content = temp_ptr;
             DA->is_alloc = true;
-            DA->element_capacity = element_number;
+            DA->elements_capacity = element_number;
             return 0;
         }
     }
@@ -108,23 +108,23 @@ int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
 int DynamicArray_shrink(DynamicArray *DA, size_t element_number)
 {
     return_if_DA_NULL(DA, -1);
-    if(element_number >= DA->element_capacity) {
+    if(element_number >= DA->elements_capacity) {
         free(DA->content);
         DA->elements_n = 0;
-        DA->element_capacity = 0;
+        DA->elements_capacity = 0;
         DA->content = NULL;
         DA->is_alloc = false;
 
         return 0;
     } else {
         void *temp_ptr = realloc(DA->content,
-                DA->type_size * (DA->element_capacity - element_number));
+                DA->type_size * (DA->elements_capacity - element_number));
 
         if(!temp_ptr) return -1;
         else {
             DA->content = temp_ptr;
-            DA->element_capacity -= element_number;
-            if(DA->elements_n > DA->element_capacity) DA->elements_n = DA->element_capacity;
+            DA->elements_capacity -= element_number;
+            if(DA->elements_n > DA->elements_capacity) DA->elements_n = DA->elements_capacity;
             return 0;
         }
     }
@@ -137,7 +137,7 @@ size_t DynamicArray_get_size(const DynamicArray *DA)
 
 size_t DynamicArray_get_capacity(const DynamicArray *DA)
 {
-    return DA->element_capacity;
+    return DA->elements_capacity;
 }
 
 void *DynamicArray_get_element(DynamicArray *DA, size_t index)
@@ -155,7 +155,7 @@ void *DynamicArray_get_element(DynamicArray *DA, size_t index)
 int DynamicArray_add_element(DynamicArray *DA, const void *element)
 {
     return_if_DA_NULL(DA, -1);
-    if(DA->elements_n + 1 > DA->element_capacity) {
+    if(DA->elements_n + 1 > DA->elements_capacity) {
         if(DynamicArray_reserve(DA, DA->elements_n + 1) != 0) return -1;
     }
     memcpy((char *)DA->content + (DA->elements_n * DA->type_size), element, DA->type_size);
@@ -168,7 +168,7 @@ int DynamicArray_add_multiple_elements(DynamicArray *DA, const void *elements,
         size_t element_number)
 {
     return_if_DA_NULL(DA, -1);
-    if(DA->elements_n + element_number > DA->element_capacity) {
+    if(DA->elements_n + element_number > DA->elements_capacity) {
         if(DynamicArray_reserve(DA, DA->elements_n + element_number) != 0) {
             return -1;
         }
