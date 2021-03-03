@@ -35,6 +35,7 @@ int main()
     struct DummyStruct dummy_3 = { .b = 3 };
 
     struct DummyStruct *dummy_ptr = NULL;
+    struct DummyStruct struct_array[3] = { dummy_1, dummy_2, dummy_3 };
     DynamicArray *da = DynamicArray_init_and_reserve(sizeof(struct DummyStruct), 25);
 
     if(!da) return EXIT_FAILURE;
@@ -50,6 +51,11 @@ int main()
     assert(DynamicArray_remove_element(da, 1) == 0);
     dummy_ptr = DynamicArray_get_element(da, 1);
     assert(dummy_ptr->b == 3);
+
+    assert(DynamicArray_shrink(da, 49) == 0);
+    assert(DynamicArray_remove_element(da, 0) == 0);
+    DynamicArray_add_multiple_elements(da, struct_array, 2);
+    assert(DynamicArray_shrink(da, 30) == 0);
 
     DynamicArray_free(&da);
 
