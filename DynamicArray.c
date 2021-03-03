@@ -84,9 +84,15 @@ void DynamicArray_free(DynamicArray **DA)
 int DynamicArray_reserve(DynamicArray *DA, size_t element_number)
 {
     return_if_DA_NULL(DA, -1);
-    if(DA->element_capacity > element_number) {
+    if(!DA->is_alloc) {
+        DA->content = malloc(element_number * DA->type_size);
+        if(!DA->content) return -1;
+
+        DA->is_alloc = true;
+        DA->element_capacity = element_number;
         return 0;
-    } else {
+    } else if(DA->element_capacity > element_number) return 0;
+    else {
         void *temp_ptr = realloc(DA->content, element_number * DA->type_size);
 
         if(!temp_ptr) return -1;
